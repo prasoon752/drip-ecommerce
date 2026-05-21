@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Drip — Fashion Store</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">drip.</div>
+  <div class="nav-search">
+    <i class="ti ti-search"></i>
+    <input type="text" id="searchIn" placeholder="Search for brands and products" oninput="applyFilters()">
+  </div>
+  <div class="nav-icons">
+    <div class="nav-icon" onclick="openAuth()">
+      <i class="ti ti-user"></i>
+      <span>Profile</span>
+    </div>
+    <div class="nav-icon">
+      <i class="ti ti-heart"></i>
+      <span>Wishlist</span>
+    </div>
+    <div class="nav-icon" onclick="openCart()" style="position:relative">
+      <i class="ti ti-shopping-bag"></i>
+      <div class="cart-badge" id="cartBadge" style="display:none">0</div>
+      <span>Bag</span>
+    </div>
+  </div>
+</nav>
+
+<!-- CATEGORY NAV -->
+<div class="cat-nav" id="catNav">
+  <div class="cat-item active" onclick="setCat('All',this)">Men</div>
+  <div class="cat-item" onclick="setCat('Women',this)">Women</div>
+  <div class="cat-item" onclick="setCat('Kids',this)">Kids</div>
+  <div class="cat-item" onclick="setCat('Ethnic',this)">Ethnic Wear</div>
+  <div class="cat-item" onclick="setCat('Winter',this)">Winter</div>
+  <div class="cat-item" onclick="setCat('Streetwear',this)">Streetwear</div>
+  <div class="cat-item" onclick="setCat('Sports',this)">Sports</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <h2>End of Season Sale</h2>
+    <p>Up to 70% off on top brands.<br>New arrivals every day.</p>
+    <button class="hero-btn">SHOP NOW</button>
+  </div>
+  <div class="hero-emoji">👗</div>
+</div>
+
+<!-- FILTERS -->
+<div class="filters-bar">
+  <button class="filter-btn" onclick="toggleFilter(this,'new')"><i class="ti ti-sparkles"></i> New Arrivals</button>
+  <button class="filter-btn" onclick="toggleFilter(this,'sale')"><i class="ti ti-tag"></i> Sale</button>
+  <button class="filter-btn" onclick="toggleFilter(this,'top')"><i class="ti ti-star"></i> Top Rated</button>
+  <select class="sort-select" onchange="applyFilters()">
+    <option value="">Sort by: Recommended</option>
+    <option value="low">Price: Low to High</option>
+    <option value="high">Price: High to Low</option>
+    <option value="disc">Best Discount</option>
+    <option value="rating">Top Rated</option>
+  </select>
+</div>
+
+<!-- PRODUCTS -->
+<div class="products-section">
+  <div class="products-grid" id="grid"></div>
+</div>
+
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>My Bag (<span id="cartCount">0</span>)</h3>
+    <button class="cart-close" onclick="closeCart()">×</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter"></div>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="authModal" onclick="closeAuth(event)">
+  <div class="modal" style="position:relative">
+    <button class="modal-close-btn" onclick="closeAuthDirect()">×</button>
+    <div class="modal-left">
+      <h2>Looks like you're new here!</h2>
+      <p>Sign up with your mobile number to get started. Get access to exclusive deals, order tracking & more.</p>
+    </div>
+    <div class="modal-right">
+      <div class="auth-tabs">
+        <div class="auth-tab active" onclick="switchTab('login',this)">Login</div>
+        <div class="auth-tab" onclick="switchTab('signup',this)">Sign Up</div>
+      </div>
+      <div id="loginForm">
+        <div class="auth-field"><label>Email</label><input type="email" placeholder="Enter email"></div>
+        <div class="auth-field"><label>Password</label><input type="password" placeholder="Enter password"></div>
+        <button class="auth-submit" onclick="doLogin()">LOGIN</button>
+      </div>
+      <div id="signupForm" style="display:none">
+        <div class="auth-field"><label>Full Name</label><input type="text" placeholder="Your name"></div>
+        <div class="auth-field"><label>Email</label><input type="email" placeholder="Enter email"></div>
+        <div class="auth-field"><label>Password</label><input type="password" placeholder="Create password"></div>
+        <button class="auth-submit" onclick="doLogin()">CREATE ACCOUNT</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="js/products.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
